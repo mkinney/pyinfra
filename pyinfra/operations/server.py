@@ -437,7 +437,7 @@ def sysctl(
     existing_sysctls = host.get_fact(Sysctl, keys=[key])
     existing_value = existing_sysctls.get(key)
 
-    if not existing_value or existing_value != value:
+    if existing_value != value:
         yield "sysctl {0}='{1}'".format(key, string_value)
     else:
         host.noop("sysctl {0} is set to {1}".format(key, string_value))
