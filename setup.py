@@ -59,7 +59,7 @@ TEST_REQUIRES = (
 )
 
 DOCS_REQUIRES = (
-    "pyinfra-guzzle_sphinx_theme==0.16",
+    "pyinfra-guzzle_sphinx_theme==0.17",
     "myst-parser==4.0.1",
     "sphinx==8.2.3",
 )
