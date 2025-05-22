@@ -5,7 +5,7 @@ import re
 import shutil
 from datetime import datetime
 from tempfile import mkdtemp
-from typing import Dict, List, Optional
+from typing import Dict, Iterable, List, Optional, Tuple
 
 from dateutil.parser import parse as parse_date
 from distro import distro
@@ -256,6 +256,23 @@ class Mounts(FactBase[Dict[str, MountsDict]]):
             }
 
         return devices
+
+
+class Port(FactBase[Tuple[str, int] | Tuple[None, None]]):
+    """
+    Returns the process occuping a port and its PID
+    """
+
+    @override
+    def command(self, port: int) -> str:
+        return f"ss -lptnH 'src :{port}'"
+
+    @override
+    def process(self, output: Iterable[str]) -> Tuple[str, int] | Tuple[None, None]:
+        for line in output:
+            proc, pid = line.split('"')[1], int(line.split("pid=")[1].split(",")[0])
+            return (proc, pid)
+        return None, None
 
 
 class KernelModules(FactBase):
