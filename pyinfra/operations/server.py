@@ -959,21 +959,6 @@ def user(
                 yield "pw usermod -n {1} {0}".format(" ".join(args), user)
             else:
                 yield "usermod {0} {1}".format(" ".join(args), user)
-            if comment:
-                existing_user["comment"] = comment
-            if home:
-                existing_user["home"] = home
-            if shell:
-                existing_user["shell"] = shell
-            if group:
-                existing_user["group"] = group
-            if groups:
-                if append:
-                    existing_user["groups"] += groups
-                else:
-                    existing_user["groups"] = groups
-            if password:
-                existing_user["password"] = password
 
     # Ensure home directory ownership
     if ensure_home and home:
