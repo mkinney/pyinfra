@@ -38,6 +38,8 @@ INSTALL_REQUIRES = (
 )
 
 TEST_REQUIRES = (
+    # Must have click 8.2 since they changed CliRunner for tests
+    "click>=8.2",
     # Unit testing
     "pytest==8.3.5",
     "coverage==7.7.1",
@@ -120,6 +122,7 @@ if __name__ == "__main__":
             "pyinfra.connectors": [
                 "chroot = pyinfra.connectors.chroot:ChrootConnector",
                 "docker = pyinfra.connectors.docker:DockerConnector",
+                "podman = pyinfra.connectors.docker:PodmanConnector",
                 "local = pyinfra.connectors.local:LocalConnector",
                 "ssh = pyinfra.connectors.ssh:SSHConnector",
                 "dockerssh = pyinfra.connectors.dockerssh:DockerSSHConnector",
