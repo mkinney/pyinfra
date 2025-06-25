@@ -5,7 +5,6 @@ Linux/BSD.
 
 from __future__ import annotations
 
-import platform
 from io import StringIO
 from itertools import filterfalse, tee
 from os import path
@@ -21,6 +20,7 @@ from pyinfra.facts.server import (
     Groups,
     Home,
     Hostname,
+    Kernel,
     KernelModules,
     Locales,
     Mounts,
@@ -336,7 +336,7 @@ def mount(
         mounted_options = mounts[path]["options"]
         needed_options = set(options) - set(mounted_options)
         if needed_options:
-            if platform.system() == "FreeBSD":
+            if host.get_fact(Kernel).strip() == "FreeBSD":
                 fs_type = mounts[path]["type"]
                 device = mounts[path]["device"]
 
