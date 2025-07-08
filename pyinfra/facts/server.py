@@ -529,7 +529,7 @@ class Users(FactBase):
             PASSWORD=`(grep ^$i: /etc/shadow || grep ^$i: /etc/master.passwd) 2> /dev/null | cut -d: -f2`;
             echo "$ENTRY|`id -gn $i`|`id -Gn $i`|$LASTLOG|$PASSWORD";
         done
-    """.strip() # noqa
+    """.strip()  # noqa
 
     default = dict
 

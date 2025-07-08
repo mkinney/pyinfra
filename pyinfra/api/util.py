@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 from functools import wraps
-from hashlib import sha1
+from hashlib import sha1, sha256
 from inspect import getframeinfo, stack
 from io import BytesIO, StringIO
 from os import getcwd, path, stat
@@ -341,7 +342,7 @@ class get_file_io:
     _close: bool = False
     _file_io: IO[Any]
 
-    def __init__(self, filename_or_io, mode="rb"):
+    def __init__(self, filename_or_io: str | IO, mode: str = "rb"):
         if not (
             # Check we can be read
             hasattr(filename_or_io, "read")
@@ -390,6 +391,14 @@ class get_file_io:
 
 
 def get_file_sha1(filename_or_io):
+    return _get_file_digest(filename_or_io, sha1())
+
+
+def get_file_sha256(filename_or_io):
+    return _get_file_digest(filename_or_io, sha256())
+
+
+def _get_file_digest(filename_or_io: str | IO, hasher: hashlib._Hash):
     """
     Calculates the SHA1 of a file or file object using a buffer to handle larger files.
     """
@@ -401,7 +410,6 @@ def get_file_sha1(filename_or_io):
         return FILE_SHAS[cache_key]
 
     with file_data as file_io:
-        hasher = sha1()
         buff = file_io.read(BLOCKSIZE)
 
         while len(buff) > 0:
