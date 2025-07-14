@@ -305,7 +305,8 @@ def pop_global_arguments(
 
     config = state.config
     if ctx_config.isset():
-        config = config
+        config = ctx_config.get()
+        assert config is not None
 
     cdkwargs = host.current_deploy_kwargs
     meta_kwargs: dict[str, Any] = cdkwargs or {}  # type: ignore[assignment]
