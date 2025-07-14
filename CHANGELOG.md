@@ -1,3 +1,7 @@
+# v3.4.1
+
+- fix config context when getting operation arguments
+
 # v3.4
 
 Much delayed 3.4, great collection of additions and improvements. Huge THANK YOU to all contributors as always. New features:
