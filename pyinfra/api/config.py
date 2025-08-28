@@ -53,6 +53,8 @@ class ConfigDefaults:
     IGNORE_ERRORS: bool = False
     # Shell to use to execute commands
     SHELL: str = "sh"
+    # Whether to display full diffs for files
+    DIFF: bool = False
     # Number of times to retry failed operations
     RETRY: int = 0
     # Delay in seconds between retry attempts

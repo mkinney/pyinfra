@@ -68,6 +68,12 @@ CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
     help="Don't execute operations on the target hosts.",
 )
 @click.option(
+    "--diff",
+    is_flag=True,
+    default=False,
+    help="Show the differences when changing text files and templates.",
+)
+@click.option(
     "-y",
     "--yes",
     is_flag=True,
@@ -279,6 +285,7 @@ def _main(
     group_data,
     config_filename: str,
     dry: bool,
+    diff: bool,
     yes: bool,
     limit: Iterable,
     no_wait: bool,
@@ -324,6 +331,7 @@ def _main(
         shell_executable,
         fail_percent,
         yes,
+        diff,
         retry,
         retry_delay,
     )
@@ -565,6 +573,7 @@ def _set_config(
     shell_executable,
     fail_percent,
     yes,
+    diff,
     retry,
     retry_delay,
 ):
@@ -600,6 +609,9 @@ def _set_config(
 
     if fail_percent is not None:
         config.FAIL_PERCENT = fail_percent
+
+    if diff:
+        config.DIFF = True
 
     if retry is not None:
         config.RETRY = retry

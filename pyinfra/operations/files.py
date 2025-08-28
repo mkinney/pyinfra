@@ -14,6 +14,7 @@ from io import StringIO
 from pathlib import Path
 from typing import IO, Any, Union
 
+import click
 from jinja2 import TemplateRuntimeError, TemplateSyntaxError, UndefinedError
 
 from pyinfra import host, logger, state
@@ -46,6 +47,7 @@ from pyinfra.facts.files import (
     Block,
     Directory,
     File,
+    FileContents,
     FindFiles,
     FindInFile,
     Flags,
@@ -62,6 +64,7 @@ from .util.files import (
     MetadataTimeField,
     adjust_regex,
     ensure_mode_int,
+    generate_color_diff,
     get_timestamp,
     sed_delete,
     sed_replace,
@@ -1030,6 +1033,23 @@ def put(
     # File exists, check sum and check user/group/mode/atime/mtime if supplied
     else:
         if not _file_equal(local_sum_path, dest):
+            if state.config.DIFF:
+                # Generate diff when contents change
+                current_contents = host.get_fact(FileContents, path=dest)
+                if current_contents:
+                    current_lines = [line + "\n" for line in current_contents]
+                else:
+                    current_lines = []
+
+                logger.info(f"\n    Will modify {click.style(dest, bold=True)}")
+
+                with get_file_io(src, "r") as f:
+                    desired_lines = f.readlines()
+
+                for line in generate_color_diff(current_lines, desired_lines):
+                    logger.info(f"  {line}")
+                logger.info("")
+
             yield FileUploadCommand(
                 local_file,
                 dest,
