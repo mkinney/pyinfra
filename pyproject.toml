@@ -62,6 +62,7 @@ test = [
     "types-paramiko>=2.7,<4",
     "types-python-dateutil>2,<3",
     "types-PyYAML>6,<7",
+    "pyinfra-testgen==0.1.1",
 ]
 
 docs = [

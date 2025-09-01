@@ -1183,6 +1183,7 @@ dev = [
     { name = "mypy" },
     { name = "myst-parser", marker = "python_full_version >= '3.13'" },
     { name = "pyinfra-guzzle-sphinx-theme", marker = "python_full_version >= '3.13'" },
+    { name = "pyinfra-testgen" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-testinfra" },
@@ -1208,6 +1209,7 @@ test = [
     { name = "flake8-isort" },
     { name = "isort" },
     { name = "mypy" },
+    { name = "pyinfra-testgen" },
     { name = "pytest" },
     { name = "pytest-cov" },
     { name = "pytest-testinfra" },
@@ -1247,6 +1249,7 @@ dev = [
     { name = "mypy", specifier = "==1.17.1" },
     { name = "myst-parser", marker = "python_full_version >= '3.13'", specifier = ">=4.0.1,<5" },
     { name = "pyinfra-guzzle-sphinx-theme", marker = "python_full_version >= '3.13'", specifier = ">=0.17" },
+    { name = "pyinfra-testgen", specifier = "==0.1.1" },
     { name = "pytest", specifier = ">=8.3.5,<9" },
     { name = "pytest-cov", specifier = ">=7.0.0,<8" },
     { name = "pytest-testinfra", specifier = ">=10.2.2,<11" },
@@ -1272,6 +1275,7 @@ test = [
     { name = "flake8-isort", specifier = "==6.1.2,<7" },
     { name = "isort", specifier = ">=6.0.1,<7" },
     { name = "mypy", specifier = "==1.17.1" },
+    { name = "pyinfra-testgen", specifier = "==0.1.1" },
     { name = "pytest", specifier = ">=8.3.5,<9" },
     { name = "pytest-cov", specifier = ">=7.0.0,<8" },
     { name = "pytest-testinfra", specifier = ">=10.2.2,<11" },
@@ -1290,6 +1294,18 @@ dependencies = [
     { name = "sphinx", marker = "python_full_version >= '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6c/3e/64b73fdea51efa09947fe3b15556213ab083402797192efd1422fd63964d/pyinfra-guzzle_sphinx_theme-0.17.tar.gz", hash = "sha256:db518ee80a62fb2b8770c750ca9b57243821ce57c38b5ec13ca3fa3430ced439", size = 301013, upload-time = "2025-04-07T20:40:56.214Z" }
+
+[[package]]
+name = "pyinfra-testgen"
+version = "0.1.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/36/ad/4d7ae773502ceae3ac3a7f4ea6232f865e28a9766931db2af25ab369449c/pyinfra_testgen-0.1.1.tar.gz", hash = "sha256:739a59d127d15c2e74bc965f9e77f41d080899fee18b6a10e7f5ca3153739697", size = 1065, upload-time = "2025-09-01T20:57:39.844Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/65/9a/edea57e31074b1a504b1b5b20180410971b393669e5388e773a4e49f4563/pyinfra_testgen-0.1.1-py3-none-any.whl", hash = "sha256:23d71cbe666df7a0b12a000a5cbdaade932620faced2c89bffc8a066153c9303", size = 1820, upload-time = "2025-09-01T20:57:38.749Z" },
+]
 
 [[package]]
 name = "pynacl"
