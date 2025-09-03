@@ -1003,6 +1003,16 @@ def put(
 
     # No remote file, always upload and user/group/mode if supplied
     if not remote_file or force:
+        if state.config.DIFF:
+            host.log(f"Will create {click.style(dest, bold=True)}", logger.info)
+
+            with get_file_io(src, "r") as f:
+                desired_lines = f.readlines()
+
+            for line in generate_color_diff([], desired_lines):
+                logger.info(f"  {line}")
+            logger.info("")
+
         yield FileUploadCommand(
             local_file,
             dest,
@@ -1041,7 +1051,7 @@ def put(
                 else:
                     current_lines = []
 
-                logger.info(f"\n    Will modify {click.style(dest, bold=True)}")
+                host.log(f"Will modify {click.style(dest, bold=True)}", logger.info)
 
                 with get_file_io(src, "r") as f:
                     desired_lines = f.readlines()
