@@ -1,3 +1,33 @@
+# v3.5
+
+New release with some really awesome new features, brought to you by the fantastic contributions of the community. New stuff:
+
+- add `--diff` argument to show file diffs for potential file changes (@jgelens)
+- add `_retries`, `_retry_delay` and `_retry_until` global arguments (@shohamd4)
+- parallelize disconnecting from hosts (@gwelch-contegix)
+- enable using SCP instead of SFTP for SSH file transfers (@DonDebonair)
+
+New and updated operations/facts:
+- facts/server: add `RebootRequired` fact (@wowi42)
+- operations/pip: support PEP-508 package versions (@morrison12)
+- operations+facts/docker: add Docker plugin support (@DonDebonair)
+- operations/files.put: add `atime` and `mtime` arguments (@vram0gh2)
+- operations/openrc: support runlevel when enabling services (@sengo4hd)
+- facts/yum+dnf+zypper: return `repoid` in repository facts
+
+Operation/fact fixes:
+
+- facts/files.File: add ls fallback support (@mrkbac)
+- operations/openrc: add missing noop messages (@sengo4hd)
+- operations/server.crontab: fix newline when replacing existing values (@Nananas)
+- operations/files.block: fix examples doc (@morrison12)
+- operations/files.block: fix case where file exists but line is missing (@morrison12)
+- operations/files.block: improve handling of special characters in marker lines (@morrison12)
+
+Internal/meta:
+
+- documentation link fix (@sengo4hd)
+
 # v3.4.1
 
 - fix config context when getting operation arguments
