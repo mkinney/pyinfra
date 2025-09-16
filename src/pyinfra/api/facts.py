@@ -31,6 +31,7 @@ from pyinfra.api.util import (
     print_host_combined_output,
 )
 from pyinfra.connectors.util import CommandOutput
+from pyinfra.context import ctx_host, ctx_state
 from pyinfra.progress import progress_spinner
 
 from .arguments import CONNECTOR_ARGUMENT_KEYS
@@ -144,12 +145,14 @@ def _handle_fact_kwargs(state: "State", host: "Host", cls, args, kwargs):
 
 def get_facts(state, *args, **kwargs):
     def get_host_fact(host, *args, **kwargs):
-        return get_fact(state, host, *args, **kwargs)
+        with ctx_host.use(host):
+            return get_fact(state, host, *args, **kwargs)
 
-    greenlet_to_host = {
-        state.pool.spawn(get_host_fact, host, *args, **kwargs): host
-        for host in state.inventory.iter_active_hosts()
-    }
+    with ctx_state.use(state):
+        greenlet_to_host = {
+            state.pool.spawn(get_host_fact, host, *args, **kwargs): host
+            for host in state.inventory.iter_active_hosts()
+        }
 
     results = {}
 
