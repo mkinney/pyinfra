@@ -25,7 +25,7 @@ from .command import PyinfraCommand, StringCommand
 from .exceptions import OperationValueError, PyinfraError
 from .host import Host
 from .operations import run_host_op
-from .state import State, StateOperationHostData, StateOperationMeta
+from .state import State, StateOperationHostData, StateOperationMeta, StateStage
 from .util import (
     get_call_location,
     get_file_sha1,
@@ -266,6 +266,9 @@ def _wrap_operation(func: Callable[P, Generator], _set_in_op: bool = True) -> Py
     def decorated_func(*args: P.args, **kwargs: P.kwargs) -> OperationMeta:
         state = context.state
         host = context.host
+
+        if state.current_stage < StateStage.Prepare or state.current_stage > StateStage.Execute:
+            raise Exception("Cannot call operations outside of Prepare/Execute stages")
 
         if host.in_op:
             raise Exception(

@@ -171,10 +171,16 @@ def try_import_module_attribute(path, prefix=None, raise_for_none=True):
 
     for possible in possible_modules:
         try:
-            # First use find_spec which checks if the possible module exists *without* importing
-            # it, thus any import errors it contains still get properly raised to the user.
+            # Look for the module/fn, note that from the find_spec doc:
+            # "If the name is for submodule (contains a dot), the parent module is
+            # automatically imported."
             spec = find_spec(possible)
         except ModuleNotFoundError:
+            continue
+        except Exception as e:
+            # Capture all exceptions here which may be triggered from the automatic module import
+            # referenced above the find_spec call.
+            logger.warning(f"Exception raised during inventory search on: {possible}: {e}")
             continue
         else:
             if spec is not None:
