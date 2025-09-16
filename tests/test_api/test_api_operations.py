@@ -18,7 +18,7 @@ from pyinfra.api.connect import connect_all, disconnect_all
 from pyinfra.api.exceptions import PyinfraError
 from pyinfra.api.operation import OperationMeta, add_op
 from pyinfra.api.operations import run_ops
-from pyinfra.api.state import StateOperationMeta
+from pyinfra.api.state import StateOperationMeta, StateStage
 from pyinfra.connectors.util import CommandOutput, OutputLine
 from pyinfra.context import ctx_host, ctx_state
 from pyinfra.operations import files, python, server
@@ -44,6 +44,7 @@ class TestOperationsApi(PatchSSHTestCase):
         anotherhost = inventory.get_host("anotherhost")
 
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         state.add_callback_handler(BaseStateCallback())
 
         # Enable printing on this test to catch any exceptions in the formatting
@@ -122,6 +123,7 @@ class TestOperationsApi(PatchSSHTestCase):
         inventory = make_inventory()
 
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         # Test normal
@@ -197,6 +199,7 @@ class TestOperationsApi(PatchSSHTestCase):
         inventory = make_inventory()
 
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         with patch("pyinfra.operations.files.os.path.isfile", lambda *args, **kwargs: True):
@@ -236,6 +239,7 @@ class TestOperationsApi(PatchSSHTestCase):
     def test_function_call_op(self):
         inventory = make_inventory()
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         is_called = []
@@ -257,6 +261,7 @@ class TestOperationsApi(PatchSSHTestCase):
     def test_run_once_serial_op(self):
         inventory = make_inventory()
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         # Add a run once op
@@ -280,6 +285,7 @@ class TestOperationsApi(PatchSSHTestCase):
     def test_rsync_op(self):
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         add_op(state, files.rsync, "src", "dest", _sudo=True, _sudo_user="root")
@@ -304,6 +310,7 @@ class TestOperationsApi(PatchSSHTestCase):
     def test_rsync_op_with_strict_host_key_checking_disabled(self):
         inventory = make_inventory(hosts=(("somehost", {"ssh_strict_host_key_checking": "no"}),))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         add_op(state, files.rsync, "src", "dest", _sudo=True, _sudo_user="root")
@@ -338,6 +345,7 @@ class TestOperationsApi(PatchSSHTestCase):
             )
         )
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         add_op(state, files.rsync, "src", "dest", _sudo=True, _sudo_user="root")
@@ -365,6 +373,7 @@ class TestOperationsApi(PatchSSHTestCase):
             hosts=(("somehost", {"ssh_config_file": "/home/me/ssh_test_config && echo hi"}),)
         )
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         add_op(state, files.rsync, "src", "dest", _sudo=True, _sudo_user="root")
@@ -389,6 +398,7 @@ class TestOperationsApi(PatchSSHTestCase):
     def test_rsync_op_failure(self):
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         with patch("pyinfra.connectors.ssh.which", lambda x: None):
@@ -401,6 +411,7 @@ class TestOperationsApi(PatchSSHTestCase):
         inventory = make_inventory()
 
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
 
         class NoSetDefaultDict(defaultdict):
             def setdefault(self, key, _):
@@ -422,6 +433,7 @@ class TestNestedOperationsApi(PatchSSHTestCase):
     def test_nested_op_api(self):
         inventory = make_inventory()
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
 
         connect_all(state)
 
@@ -458,6 +470,7 @@ class TestOperationFailures(PatchSSHTestCase):
     def test_full_op_fail(self):
         inventory = make_inventory()
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         add_op(state, server.shell, 'echo "hi"')
@@ -484,6 +497,7 @@ class TestOperationFailures(PatchSSHTestCase):
     def test_ignore_errors_op_fail(self):
         inventory = make_inventory()
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         add_op(state, server.shell, 'echo "hi"', _ignore_errors=True)
@@ -514,6 +528,7 @@ class TestOperationOrdering(PatchSSHTestCase):
     def test_cli_op_line_numbers(self):
         inventory = make_inventory()
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         state.current_deploy_filename = __file__
@@ -560,6 +575,7 @@ class TestOperationOrdering(PatchSSHTestCase):
     def test_api_op_line_numbers(self):
         inventory = make_inventory()
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         another_host = inventory.get_host("anotherhost")
@@ -590,6 +606,7 @@ class TestOperationRetry(PatchSSHTestCase):
         # Create inventory with just one host to simplify testing
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         # Add operation with retry settings
@@ -649,6 +666,7 @@ class TestOperationRetry(PatchSSHTestCase):
         """
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         # Add operation with retry settings
@@ -698,6 +716,7 @@ class TestOperationRetry(PatchSSHTestCase):
         # Setup inventory and state using the utility function
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         # Create a counter to track retry_until calls
@@ -757,6 +776,7 @@ class TestOperationRetry(PatchSSHTestCase):
         """
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         retry_delay = 5
@@ -799,6 +819,7 @@ class TestOperationRetry(PatchSSHTestCase):
         """
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         # Create a retry_until function that raises an exception
@@ -842,6 +863,7 @@ class TestOperationRetry(PatchSSHTestCase):
         """
         inventory = make_inventory(hosts=("somehost",))
         state = State(inventory, Config())
+        state.current_stage = StateStage.Prepare
         connect_all(state)
 
         # Track what output we've seen
