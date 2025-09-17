@@ -1248,7 +1248,7 @@ dev = [
     { name = "isort", specifier = ">=6.0.1,<7" },
     { name = "mypy", specifier = "==1.17.1" },
     { name = "myst-parser", marker = "python_full_version >= '3.13'", specifier = ">=4.0.1,<5" },
-    { name = "pyinfra-guzzle-sphinx-theme", marker = "python_full_version >= '3.13'", specifier = ">=0.17" },
+    { name = "pyinfra-guzzle-sphinx-theme", marker = "python_full_version >= '3.13'", specifier = ">=0.18" },
     { name = "pyinfra-testgen", specifier = "==0.1.1" },
     { name = "pytest", specifier = ">=8.3.5,<9" },
     { name = "pytest-cov", specifier = ">=7.0.0,<8" },
@@ -1263,7 +1263,7 @@ dev = [
 ]
 docs = [
     { name = "myst-parser", marker = "python_full_version >= '3.13'", specifier = ">=4.0.1,<5" },
-    { name = "pyinfra-guzzle-sphinx-theme", marker = "python_full_version >= '3.13'", specifier = ">=0.17" },
+    { name = "pyinfra-guzzle-sphinx-theme", marker = "python_full_version >= '3.13'", specifier = ">=0.18" },
     { name = "sphinx", marker = "python_full_version >= '3.13'", specifier = "==8.2.3" },
 ]
 test = [
@@ -1288,12 +1288,12 @@ test = [
 
 [[package]]
 name = "pyinfra-guzzle-sphinx-theme"
-version = "0.17"
+version = "0.18"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "sphinx", marker = "python_full_version >= '3.13'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6c/3e/64b73fdea51efa09947fe3b15556213ab083402797192efd1422fd63964d/pyinfra-guzzle_sphinx_theme-0.17.tar.gz", hash = "sha256:db518ee80a62fb2b8770c750ca9b57243821ce57c38b5ec13ca3fa3430ced439", size = 301013, upload-time = "2025-04-07T20:40:56.214Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5b/32/7e8e0b9cfcbfa82dfa84fdca8acec100e64ef5730d441e5d65a590c091a5/pyinfra_guzzle_sphinx_theme-0.18.tar.gz", hash = "sha256:a26f5abce4fb4a296b57e22f8f900dde1438decc48ca28ad0273fa7784bf2f5e", size = 301076, upload-time = "2025-09-17T13:47:06.053Z" }
 
 [[package]]
 name = "pyinfra-testgen"
