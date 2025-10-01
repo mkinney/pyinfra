@@ -1,3 +1,7 @@
+# v3.5.2
+
+- fix operation & fact docs generation
+
 # v3.5.1
 
 Patch release with a bunch of great fixes. But notably want to call out two major changes for anyone working on the pyinfra code itself (huge thank you Daan for implementing these):
