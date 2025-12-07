@@ -12,6 +12,6 @@
     },
     "exception": {
         "name": "OperationError",
-        "message": "testlink exists and is not a link"
+        "message": "testlink exists and is not a link, may want to use force=True and force_backup=False"
     }
 }

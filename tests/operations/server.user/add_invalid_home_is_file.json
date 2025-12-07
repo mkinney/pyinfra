@@ -16,6 +16,6 @@
     },
     "exception": {
         "name": "OperationError",
-        "message": "homedir exists and is not a directory"
+        "message": "homedir exists and is not a directory, may want to use force=True and force_backup=False"
     }
 }

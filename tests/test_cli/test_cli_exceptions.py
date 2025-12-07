@@ -82,5 +82,5 @@ class TestCliDeployExceptions(TestCase):
         assert isinstance(result.exception, WrappedError)
         assert isinstance(result.exception.exception, OperationError)
         assert (
-            result.exception.exception.args[0] == "operation_error.py exists and is not a directory"
+            result.exception.exception.args[0] == "operation_error.py exists and is not a directory, may want to use force=True and force_backup=False"
         )

@@ -12,6 +12,6 @@
     },
     "exception": {
         "name": "OperationError",
-        "message": "testfile exists and is not a file"
+        "message": "testfile exists and is not a file, may want to use force=True and force_backup=False"
     }
 }

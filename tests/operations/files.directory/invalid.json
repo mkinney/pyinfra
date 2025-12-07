@@ -12,6 +12,6 @@
     },
     "exception": {
         "name": "OperationError",
-        "message": "testdir exists and is not a directory"
+        "message": "testdir exists and is not a directory, may want to use force=True and force_backup=False"
     }
 }
