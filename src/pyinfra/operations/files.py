@@ -1165,6 +1165,10 @@ def template(
         For information on the template syntax, see
         `the jinja2 docs <https://jinja.palletsprojects.com>`_.
 
+        If the destination exists, and is a soft-link, it will remain a soft-link. If want to make
+        sure the destination file is a file (and not a soft-link), then create a task of `files.file()`
+        with `force=True, force_backup=False` before this files.template() task.
+
     **Examples:**
 
     .. code:: python
@@ -1330,7 +1334,7 @@ def _raise_or_remove_invalid_path(fs_type, path, force, force_backup, force_back
         else:
             yield StringCommand("rm", "-rf", QuoteString(path))
     else:
-        raise OperationError("{0} exists and is not a {1}".format(path, fs_type))
+        raise OperationError("{0} exists and is not a {1}, may want to use force=True and force_backup=False".format(path, fs_type))
 
 
 @operation()
